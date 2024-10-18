@@ -20,8 +20,8 @@ function signup(){
         headers: {
             'X-CSRFToken': $('meta[name="csrf"]').attr('content')
         },
-        success: function(){
-            $("#status").text('success'); 
+        success: function(response){
+            $("#status").text(response['status']); 
         },
         error: function(xhr, status, err){
             var msg = JSON.parse(xhr.responseText);
