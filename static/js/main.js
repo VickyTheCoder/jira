@@ -35,14 +35,15 @@ function signup(){
 function show_signin(){
     $('#signup').hide(100);
     $('#signin').show(150);
+
 }
 
 function signin(){
     var user = $('#username').val();
     var pwd = $('#password').val();
     var data = {
-        'user':user,
-        'pwd':pwd,
+        'username':user,
+        'password':pwd,
     };
     var headers = $('meta[name="csrf_token"]').attr('content');
 
@@ -64,3 +65,4 @@ function signin(){
 function clear_all(){
     alert("Clear Clicked!!")
 }
+

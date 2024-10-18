@@ -17,8 +17,8 @@ Including another URLconf
 from django.urls import path
 from UI import views as ui_views
 from default_auth import views as auth_views
-
 urlpatterns = [
     path('', ui_views.homepage),
-    path('auth/signup',auth_views.signup),
+    path('auth/signup', auth_views.signup),
+    path('auth/signin', auth_views.signin),
 ]
