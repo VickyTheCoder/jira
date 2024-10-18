@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jira</title>
+    <title>Jira - {{user}}</title>
     <meta name="csrf" content={{csrf_token}}>
     <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
@@ -15,14 +15,23 @@
         <input type="password" id="pwd1" placeholder="Password?">
         <input type="password" id="pwd2" placeholder="Re-type Password">
         <input type="email" id="email" placeholder="Email?">
-        <input type="text" id="mobile" placeholder="Mobile?">
+        <input type="text" id="mobile" placeholder="Mobile?"><br>
         <input type="button" onclick="signup()" value="Signup">
         <input type="button" onclick="clear_all()" value="Clear">
+        <input type="button" value="login" onclick="login()" id="user_login"><br>
         <a href="/forgot_userid">Forgot UserId?</a>
         <a href="/forgot_password">Forgot Password?</a>
         <a href="/reset_password">Reset Password?</a>
     </div>
+    
     <div id="signin" hidden>
+        <input type="text" id="userlogin" placeholder="UserName?"><br>
+        <input type="password" id="user_pwd" placeholder="Password?"><br>
+        <input type="button" value="login" onclick="user_login()">
+        <input type="button" value="clear"><br>
+        <a href="/forgot_userid">Forgot UserId?</a>
+        <a href="/forgot_password">Forgot Password?</a>
+        <a href="/reset_password">Reset Password?</a>
 
     </div>
     <div>
