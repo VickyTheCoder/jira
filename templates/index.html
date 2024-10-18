@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jira - {{user}}</title>
-    <meta name="csrf" content={{csrf_token}}>
+    <meta name="csrf_token" content={{csrf_token}}>
     <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
 </head>
@@ -17,26 +17,23 @@
         <input type="email" id="email" placeholder="Email?">
         <input type="text" id="mobile" placeholder="Mobile?"><br>
         <input type="button" onclick="signup()" value="Signup">
+        <input type="button" onclick="show_signin()" value="Login">
         <input type="button" onclick="clear_all()" value="Clear">
-        <input type="button" value="login" onclick="login()" id="user_login"><br>
-        <a href="/forgot_userid">Forgot UserId?</a>
-        <a href="/forgot_password">Forgot Password?</a>
-        <a href="/reset_password">Reset Password?</a>
     </div>
-    
     <div id="signin" hidden>
-        <input type="text" id="userlogin" placeholder="UserName?"><br>
-        <input type="password" id="user_pwd" placeholder="Password?"><br>
-        <input type="button" value="login" onclick="user_login()">
-        <input type="button" value="clear"><br>
+        <input type="username" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <input type="button" onclick="signin()" value="Sign in">
+        <input type="button" onclick="clear_all()" value="Clear">
+    </div>
+    <div id="homepage" hidden>
+        <h1>Home Page Under Construction</h1>
+    </div>
+    <div id="footer">
         <a href="/forgot_userid">Forgot UserId?</a>
         <a href="/forgot_password">Forgot Password?</a>
         <a href="/reset_password">Reset Password?</a>
-
     </div>
-    <div>
-        <font id="status"></font>
-    </div>
-
+    <div><h3 id="status"></h3></div>
 </body>
 </html>
