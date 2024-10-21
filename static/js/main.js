@@ -48,7 +48,7 @@ function signin(){
     var headers = $('meta[name="csrf_token"]').attr('content');
 
     $.ajax({
-        url:'auth/sigin',
+        url:'auth/signin',
         type:'POST',
         headers:headers,
         data:data,
