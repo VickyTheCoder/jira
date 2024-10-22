@@ -10,7 +10,7 @@
     <script src="{% static 'js/main.js' %}"></script>
 </head>
 <body>
-    <div id="signup">
+    <div id="signup" hidden>
         <input type="text" id="userid" placeholder="User Id?">
         <input type="password" id="pwd1" placeholder="Password?">
         <input type="password" id="pwd2" placeholder="Re-type Password">
@@ -29,10 +29,29 @@
     <div id="homepage" hidden>
         <h1>Home Page Under Construction</h1>
     </div>
-    <div id="footer">
+    <div id="footer" hidden>
         <a href="/forgot_userid">Forgot UserId?</a>
         <a href="/forgot_password">Forgot Password?</a>
         <a href="/reset_password">Reset Password?</a>
+    </div>
+
+    <!-- project -->
+
+    <div id="project_add">
+        <input type="text" placeholder="project name" id="name">
+        <textarea placeholder="project Description" id="desc"></textarea>
+        <input type="number" placeholder="project members count" id="count">
+        <input type="number" placeholder="project budget" id="budget">
+        <input type="number" placeholder="project ID" id="pid">
+        <input type="button" value="next" id="button" onclick="project_details()">
+    </div>
+    <div id="members_add" hidden>
+        <input type="text" placeholder="member name" id="mem_name">
+        <input type="text" placeholder="position" id="position">
+        <input type="email" placeholder="email" id="email2">
+        <input type="number" placeholder="id" id="id">
+        <input type="number" placeholder="number" id="number">
+        <input type="button" value="submit" id="tbutton" onclick="team_member()">
     </div>
     <div><h3 id="status"></h3></div>
 </body>
