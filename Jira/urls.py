@@ -17,8 +17,10 @@ Including another URLconf
 from django.urls import path
 from UI import views as ui_views
 from default_auth import views as auth_views
+from project import views as pro_views
 urlpatterns = [
     path('', ui_views.homepage),
     path('auth/signup', auth_views.signup),
     path('auth/signin', auth_views.signin),
+    path('project/details',pro_views.project_page),
 ]

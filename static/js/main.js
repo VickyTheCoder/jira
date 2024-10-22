@@ -66,3 +66,37 @@ function clear_all(){
     alert("Clear Clicked!!")
 }
 
+
+function project_details(){
+    var name=$('#name').val();
+    var description=$('#desc').val(); 
+    var count =$('#count').val();
+    var pid=$('#pid').val();
+    var budget=$('#budget').val();
+
+    
+
+    var data={
+        'name':name,
+        'description':description,
+        'count':count,
+        'pid':pid,
+        'budget':budget,
+    }
+    console.log(data);
+
+    $.ajax({
+        'url':'/project/details',
+        'type':'POST',
+        'data':data,
+        'headers':{'X-CSRFToken':$('meta[name="csrf_token"]').attr('content')},
+        'success':function(response){
+            $('#status').text(response['status'])
+        },
+        'error':function(xhr, status, error){
+            var msg = JSON.parse(xhr.responseText);
+            $('#status').text(status +':'+ error +':'+ msg.error)
+        },
+    })
+} 
+
