@@ -23,4 +23,7 @@ urlpatterns = [
     path('auth/signup', auth_views.signup),
     path('auth/signin', auth_views.signin),
     path('project/details',pro_views.project_page),
+    path('project/team',pro_views.project_team),
+    path('project/team/save',pro_views.project_team_save),
+    path('project/data',pro_views.email_data),
 ]

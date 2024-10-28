@@ -1,9 +1,11 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from project.models import project,team_members
+from django.contrib.auth.models import User
 
 # Create your views here.
 
+# To save project in DB
 def project_page(request):
     if request.method=='GET':
         return render(request,'index.html')
@@ -19,6 +21,69 @@ def project_page(request):
         user.save()
         status="Project created succesfully"
         return JsonResponse({'status':status})
+    
 
 def project_team(request):
-    return JsonResponse("Hello Team member")
+    if request.method=='POST':
+        print(9999999999999999999999999999999999)
+        # Check project id and get member
+        global project_id
+        project_id = request.POST.get('project_id')
+        print(project_id)
+
+        user_email_list = []
+        try: #To show email_ID in dropdown
+            if project.objects.filter(project_id=project_id):
+                existing_user = User.objects.filter(is_staff = False)
+                for user_email in existing_user:
+                    user_email_list.append(user_email.email)
+                    print(user_email_list)
+            return JsonResponse({'user_email': user_email_list})
+        except:
+            return JsonResponse({'status': 'error'}, status = 403)
+
+
+
+def email_data(request):
+    if request.method=='POST':
+        print(111111111111111111111)
+        select_email = request.POST.get('selected_email')
+
+        existing_user = User.objects.get(email=select_email)
+        username = existing_user.username
+
+        return JsonResponse({'name':username})
+    
+    return JsonResponse({'status':'User Problem'},status=403)
+
+
+def project_team_save(request):
+    print(77777)
+    if request.method=='POST':
+        #for data storing in DB
+        print(2222222222222222222222222222)
+        mname=request.POST.get('mname')
+        position=request.POST.get('position')
+        id=request.POST.get('id')
+        mobile=request.POST.get('mobile')
+        mem_email=request.POST.get('email')
+        print(mname,position,id,mobile,mem_email,1122222222222333333333)
+        projectID=project.objects.get(project_id=id)
+        try :
+            if mname and position and id and mobile and mem_email:
+                print(2222222222222222222222222222)
+                team_member_data=team_members(
+                    name=mname,
+                    position=position,
+                    project_id=projectID,
+                    mobile=mobile,
+                    email=mem_email,
+                )
+                team_member_data.save()
+                return JsonResponse({'status':'Member data Inserted'})
+        except:
+            import traceback
+            print(traceback.format_exc())
+            return JsonResponse({'status':'Please enter all member details'})
+    else:
+        return JsonResponse({'status':'request method is not post'})
