@@ -81,6 +81,8 @@ def project_team_save(request):
                 )
                 team_member_data.save()
                 return JsonResponse({'status':'Member data Inserted'})
+            else:
+                return JsonResponse({'status':'Please enter all member details'})
         except:
             import traceback
             print(traceback.format_exc())
