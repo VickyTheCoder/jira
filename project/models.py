@@ -11,7 +11,7 @@ class project(models.Model):
     project_id=models.IntegerField(primary_key=True)
     project_budget=models.IntegerField()
  
-class team_members(models.Model):
+class team_members(models.Model): 
     name=models.CharField(max_length=78)
     position=models.CharField(max_length=78)
     email=models.EmailField(primary_key=True)

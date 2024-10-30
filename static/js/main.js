@@ -103,33 +103,62 @@ function project_details(){
 
 // function for check valid project id and get members
 function check_project_id(){
-    console.log("helo");
+    console.log("Initiating project ID check...");
     var project_id = $('#tid').val();
-    console.log(project_id);
-    alert(project_id+"--------");
+    console.log("Project ID:", project_id);
+
     $.ajax({
-        url:'project/team',
+        url: 'project/team',
         type: 'POST',
-        headers:{'X-CSRFToken':$('meta[name="csrf_token"]').attr('content')},
+        headers: {'X-CSRFToken': $('meta[name="csrf_token"]').attr('content')},
         data: {'project_id': project_id},
         success: function(response){
+            $('#email2').empty().append('<option value="">-- Select Email --</option>');
 
-            $('#email2').empty().append('<option value="">-- Select Email --</option>');
-                        // Loop through the user_emails from the response
-                        $.each(response.user_email, function(index, email) {
-                            $('#email2').append($('<option>', {
-                                value: email,
-                                text: email
-                            }));
-                        });
+            // Check the response format and contents
+            console.log("Response received:", response);
+
+            // Populate dropdown options
+            $.each(response.user_email, function(email, username) {
+                console.log("Adding email:", email, "with username:", username);
+                
+                // Append each email as an option with the email as both value and display text
+                $('#email2').append($('<option>', {
+                    value: email,
+                    text: email
+                }));
+            });
+
+            // Handle change event to update username in #mem_name on selection
+            $('#email2').on('change', function() {
+                var selectedEmail = $(this).val(); // Get the selected email
+                console.log("Selected email:", selectedEmail);
+
+                // Get the associated username for the selected email
+                var username = response.user_email[selectedEmail];
+                if (selectedEmail==""){
+                    $('#mem_name').val("");
+                    $('#status').text("Please selected a Email addresss");
+                    $('#status').fadeOut(3000);
+                }
+                if (username) {
+                    console.log("Setting username in #mem_name:", username);
+                    $('#mem_name').val(username);
+                } else {
+                    console.log("No username found for selected email:", selectedEmail);
+                }
+            });
         },
-        error:function(xhr, status, error){
+        error: function(xhr, status, error){
             $('#email2').empty().append('<option value="">-- Select Email --</option>');
-            var msg=JSON.parse(xhr.responseText);
-            $('#status').text(status+":"+error+":"+msg.status)
+            var msg = JSON.parse(xhr.responseText);
+            $('#status').text(status + ":" + error + ":" + msg.status);
         }
-    })
+    });
 }
+
+
+
 
 // To save team member data in DB
 function team_member(){
@@ -154,29 +183,7 @@ function team_member(){
         'headers':{'X-CSRFToken':$('meta[name="csrf_token"]').attr('content')},
         'success':function(response){
             $('#status').text(response['status'])
-        },
-        'error':function(xhr,status,error){
-            var msg=JSON.parse(xhr.responseText);
-            $('#status').text(status+":"+error+":"+msg.status)
-        }
-    })
-}
-
-// to get username after selecting email
-function user_details(){
-    var selected_email=$('#email2').val();
-    console.log(selected_email);
-
-    
-    $.ajax({
-        'url':'project/data',
-        'type':'POST',
-        'headers':{'X-CSRFToken':$('meta[name="csrf_token"]').attr('content')},
-        'data':{'selected_email':selected_email},
-        'success':function(response){
-            $('#mem_name').val(response['name'])
-            // $('#position').val(response['position'])
-            $('#number').val(response['number'])
+            $('#status').show()
         },
         'error':function(xhr,status,error){
             var msg=JSON.parse(xhr.responseText);

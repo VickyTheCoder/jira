@@ -31,30 +31,17 @@ def project_team(request):
         project_id = request.POST.get('project_id')
         print(project_id)
 
-        user_email_list = []
+        user_email_list = {}
         try: #To show email_ID in dropdown
             if project.objects.filter(project_id=project_id):
                 existing_user = User.objects.filter(is_staff = False)
                 for user_email in existing_user:
-                    user_email_list.append(user_email.email)
-                    print(user_email_list)
-            return JsonResponse({'user_email': user_email_list})
+                    user_email_list[user_email.email]=user_email.username
+                print(user_email_list)
+                return JsonResponse({'user_email': user_email_list})
         except:
             return JsonResponse({'status': 'error'}, status = 403)
 
-
-
-def email_data(request):
-    if request.method=='POST':
-        print(111111111111111111111)
-        select_email = request.POST.get('selected_email')
-
-        existing_user = User.objects.get(email=select_email)
-        username = existing_user.username
-
-        return JsonResponse({'name':username})
-    
-    return JsonResponse({'status':'User Problem'},status=403)
 
 
 def project_team_save(request):
@@ -88,4 +75,4 @@ def project_team_save(request):
             print(traceback.format_exc())
             return JsonResponse({'status':'Please enter all member details'})
     else:
-        return JsonResponse({'status':'request method is not post'})
+        return JsonResponse({'status':'request method is not post'}) 
