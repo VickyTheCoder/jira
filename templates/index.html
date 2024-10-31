@@ -10,7 +10,7 @@
     <script src="{% static 'js/main.js' %}"></script>
 </head>
 <body>
-    <div id="signup" hidden>
+    <div id="signup">
         <input type="text" id="userid" placeholder="User Id?">
         <input type="password" id="pwd1" placeholder="Password?">
         <input type="password" id="pwd2" placeholder="Re-type Password">
@@ -45,11 +45,15 @@
         <input type="number" placeholder="project ID" id="pid">
         <input type="button" value="next" id="button" onclick="project_details()">
     </div>
+
     <div id="members_add" hidden>
+        <input type="number" placeholder="id" id="tid" onblur="check_project_id()">
+        <!-- <input type="email" placeholder="email" id="email2"> -->
+         <select name="email2" id="email2">
+            <option value="" id="choosen_one">-- Select Email --</option>
+         </select>
         <input type="text" placeholder="member name" id="mem_name">
         <input type="text" placeholder="position" id="position">
-        <input type="email" placeholder="email" id="email2">
-        <input type="number" placeholder="id" id="id">
         <input type="number" placeholder="number" id="number">
         <input type="button" value="submit" id="tbutton" onclick="team_member()">
     </div>
