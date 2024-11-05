@@ -45,7 +45,8 @@ function signin(){
         'username':user,
         'password':pwd,
     };
-    var headers = $('meta[name="csrf_token"]').attr('content');
+    var headers={'X-CSRFToken':$('meta[name="csrf_token"]').attr('content')};
+
 
     $.ajax({
         url:'auth/signin',
@@ -53,7 +54,7 @@ function signin(){
         headers:headers,
         data:data,
         success:function(response){
-            $('#sigin').hide(100);
+            $('#signin').hide(100);
             $('#footer').hide(100);
             $('#status').hide(100);
             $('#homepage').show(150);
