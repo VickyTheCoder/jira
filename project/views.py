@@ -76,3 +76,4 @@ def project_team_save(request):
             return JsonResponse({'status':'Please enter all member details'})
     else:
         return JsonResponse({'status':'request method is not post'}) 
+    
