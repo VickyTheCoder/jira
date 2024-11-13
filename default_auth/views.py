@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth import models
-from django.contrib.auth import authenticate, login
+from django.contrib import auth
+
 
 def signup(request):
     if request.method == 'POST':
@@ -29,11 +30,29 @@ def signin(request):
     user=request.POST.get('username')
     password=request.POST.get('password')
     print(user,password)
-    auth_user=authenticate(username=user,password=password)    
+
+    # user_check=models.User.objects.filter(username=user)
+    # password_check=models.User.objects.filter(password=password)
+
+    # if user in user_check and password in password_check:
+    auth_user=auth.authenticate(username=user,password=password)    
     print(auth_user)
 
-    if auth_user:
-        login(request=request,user=auth_user)
-        return JsonResponse({'status':f'{auth_user} logged In successfully'})
+    if auth_user: 
+        auth.login(request=request,user=auth_user)
+        print(11111111111)
+        return JsonResponse({'status':f'{user} logged In successfully','username':user})
     else:
         return JsonResponse({'status':'Authentication Failed'})
+
+# user logout
+def user_logout(request):
+    if request.user.is_authenticated:
+        print('yesssssssssssssssss')
+        auth.logout(request)
+        print('lllllllllllllllllllllll')
+        return JsonResponse({'status':'user logged out','reload':True})
+    else:
+        return JsonResponse({'status':'error'})
+
+        

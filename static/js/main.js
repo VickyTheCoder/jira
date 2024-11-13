@@ -1,3 +1,5 @@
+ 
+// signup page---------------------------------------------------------
 function signup(){
     var userid = $('#userid').val();
     var pwd1 = $('#pwd1').val();
@@ -24,6 +26,7 @@ function signup(){
             $('#status').text(response['status']);
             $('#signup').hide(100);
             $('#signin').show(150);
+            $('#footer').show(150);
         },
         'error':function(xhr, status, error){
             var msg = JSON.parse(xhr.responseText);
@@ -32,15 +35,19 @@ function signup(){
     })
 }
 
+// signin showing page-----------------------------------------------------------
 function show_signin(){
     $('#signup').hide(100);
     $('#signin').show(150);
+    $('#footer').show(150);
 
 }
 
+// signin page-------------------------------------------------------------------
 function signin(){
     var user = $('#username').val();
     var pwd = $('#password').val();
+
     var data = {
         'username':user,
         'password':pwd,
@@ -49,25 +56,40 @@ function signin(){
 
 
     $.ajax({
-        url:'auth/signin',
-        type:'POST',
-        headers:headers,
-        data:data,
-        success:function(response){
+        'url':'auth/signin',
+        'type':'POST',
+        'headers':headers,
+        'data':data,
+        'success':function(response){
+            console.log(response);
+            console.log(response['status']);
+            $('#homepage').show();
+            $('#status').text(response['status']);
             $('#signin').hide(100);
             $('#footer').hide(100);
-            $('#status').hide(100);
-            $('#homepage').show(150);
-        }
+            // $('#homepage').hide(150);
+            // $('#status').hide(150);
+            $('#sign_out').show(); 
+            $('#project_add').show(150);
+            if(response.username){
+                $('#title').text("Jira" +" "+response.username);
+                $('#hometext').text("Welcome to Jira"+" "+response.username);
+            };
+        },
+        'error':function(xhr, status, error){
+            var msg = JSON.parse(xhr.responseText);
+            $('#status').text(status +':'+ error +':'+ msg.error)
+        },
     })
 }
 
 
 function clear_all(){
-    alert("Clear Clicked!!")
+    $('#username').val("");
+    $('#password').val("");
 }
 
-// For project Details
+// For project Details ------------------------------------------------------------
 function project_details(){
     var name=$('#name').val();
     var description=$('#desc').val(); 
@@ -102,7 +124,7 @@ function project_details(){
     })
 } 
 
-// function for check valid project id and get members
+// function for check valid project id and get members------------------------------------------------
 function check_project_id(){
     console.log("Initiating project ID check...");
     var project_id = $('#tid').val();
@@ -181,7 +203,7 @@ function team_member(){
         'url':'project/team/save',
         'type':'POST',
         'data':data,
-        'headers':{'X-CSRFToken':$('meta[name="csrf_token"]').attr('content')},
+        headers: {'X-CSRFToken': $('meta[name="csrf_token"]').attr('content')},
         'success':function(response){
             $('#status').text(response['status'])
             $('#status').show()
@@ -190,5 +212,25 @@ function team_member(){
             var msg=JSON.parse(xhr.responseText);
             $('#status').text(status+":"+error+":"+msg.status)
         }
+    })
+}
+
+// Logout function
+
+function logout(){
+    // console.log("headers"),
+
+    $.ajax({
+        'url':'user/logout',
+        'type':'GET',
+        'success':function(response){
+            if(response.reload){
+                location.reload()
+            }
+        },
+        'error':function(xhr,status,error){
+            var msg=JSON.parse(xhr.responseText);
+            $('#status').text(status+":"+error+":"+msg.status);
+        },
     })
 }
